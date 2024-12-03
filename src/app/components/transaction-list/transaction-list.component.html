@@ -1,0 +1,62 @@
+<mat-card>
+  <div class="filters">
+    <mat-form-field>
+      <mat-label>Filter by Type</mat-label>
+      <mat-select (selectionChange)="filterByType($event.value)">
+        <mat-option value="">All</mat-option>
+        <mat-option value="income">Income</mat-option>
+        <mat-option value="expense">Expense</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Filter by Category</mat-label>
+      <mat-select (selectionChange)="filterByCategory($event.value)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="sorting">
+    <button mat-raised-button color="accent" (click)="sortTransactions('amount', 'asc')">
+      Sort by Amount (Asc)
+    </button>
+    <button mat-raised-button color="accent" (click)="sortTransactions('amount', 'desc')">
+      Sort by Amount (Desc)
+    </button>
+    <button mat-raised-button color="primary" (click)="sortTransactions('date', 'asc')">
+      Sort by Date (Asc)
+    </button>
+    <button mat-raised-button color="primary" (click)="sortTransactions('date', 'desc')">
+      Sort by Date (Desc)
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="transactions$" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.amount | currency }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.category }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let transaction"> {{ transaction.date }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name', 'amount', 'category', 'date']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'amount', 'category', 'date'];"></tr>
+  </table>
+</mat-card>

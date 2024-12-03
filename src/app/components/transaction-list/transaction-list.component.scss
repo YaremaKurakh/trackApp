@@ -1,0 +1,12 @@
+.filters,
+.sorting {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+button {
+  width: fit-content;
+  height: fit-content;
+  padding: 10px;
+}
